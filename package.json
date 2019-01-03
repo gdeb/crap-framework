@@ -1,0 +1,29 @@
+{
+  "name": "crap-project",
+  "version": "0.1.0",
+  "description": "Core for Rapid Application Prototyping",
+  "directories": {
+    "src": "src",
+    "test": "test"
+  },
+  "main": "./dist/src/index.js",
+  "typings": "./dist/src/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "tes2t": "tsc && ava ./dist/tests/*.js",
+    "prebuild:example:demo": "rm -rf dist/examples && mkdir dist/examples && mkdir dist/examples/demo && cp -r examples/demo/static/* dist/examples/demo",
+    "build:example:demo": "tsc -m amd --outFile dist/examples/demo/app.js examples/demo/app.ts",
+    "postbuild:example:demo": "open dist/examples/demo/index.html"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.11",
+    "@types/node": "^10.12.18",
+    "jest": "^23.6.0",
+    "source-map-support": "^0.5.9",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.2.2"
+  },
+  "author": "Géry Debongnie <gery.debongnie@gmail.com>",
+  "license": "MIT",
+  "dependencies": {}
+}
