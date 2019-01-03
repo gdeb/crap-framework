@@ -3,7 +3,7 @@
     "module": "commonjs",
     "preserveConstEnums": true,
     "noImplicitThis": true,
-    "lib": ["es6"],
+    "lib": ["es6", "dom"],
     "removeComments": false,
     "inlineSourceMap": true,
     "declaration": true,
@@ -11,7 +11,7 @@
     "outDir": "dist",
     "alwaysStrict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "strictNullChecks": true
