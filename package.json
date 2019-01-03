@@ -10,6 +10,7 @@
   "typings": "./dist/src/index.d.ts",
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "tes2t": "tsc && ava ./dist/tests/*.js",
     "prebuild:example:demo": "rm -rf dist/examples && mkdir dist/examples && mkdir dist/examples/demo && cp -r examples/demo/static/* dist/examples/demo",
     "build:example:demo": "tsc -m amd --outFile dist/examples/demo/app.js examples/demo/app.ts",
