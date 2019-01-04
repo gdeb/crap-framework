@@ -78,7 +78,7 @@ export default class QWeb {
       ctx.code.push(`return ${ctx.mainNodes[0]}`);
     }
     const functionCode = ctx.code.join(";\n");
-    // console.log(`Template: ${rawTemplate}\nCompiled code:\n` + functionCode);
+    console.log(`Template: ${rawTemplate}\nCompiled code:\n` + functionCode);
     const template: Template = (new Function(
       "context",
       functionCode
@@ -100,17 +100,21 @@ export default class QWeb {
   ): number | undefined {
     let nodeID: number | undefined;
 
+    // t-set
+    if (node.attributes.hasOwnProperty("t-set")) {
+      const variable = node.getAttribute("t-set")!;
+      let value = node.getAttribute("t-value")!;
+      if (!value) {
+        value = `"${node.textContent!}"`;
+      }
+      ctx.variables[variable] = value;
+      return;
+    }
+
     if (node.nodeName === "t") {
       this._compileNodeList(parentID, node.childNodes, ctx);
     } else {
       nodeID = this._compileGenericNode(node, parentID, ctx);
-    }
-
-    // t-set
-    if (node.attributes.hasOwnProperty("t-set")) {
-      const variable = node.getAttribute("t-set")!;
-      const value = node.getAttribute("t-value")!;
-      ctx.variables[variable] = value;
     }
 
     // t-esc

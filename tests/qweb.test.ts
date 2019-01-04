@@ -88,4 +88,10 @@ describe("t-set", () => {
     const result = renderToString(template);
     expect(result).toBe("ok");
   });
+
+  test("set from body literal", () => {
+    const template = `<t><t t-set="value">ok</t><t t-esc="value"/></t>`;
+    const result = renderToString(template);
+    expect(result).toBe("ok");
+  });
 });
