@@ -10,8 +10,8 @@ function renderToString(t: string, context: EvalContext = {}): string {
 describe("static templates", () => {
   test("empty div", () => {
     const template = "<div></div>";
-    const result = renderToString(template);
-    expect(result).toBe(template);
+    const expected = template;
+    expect(renderToString(template)).toBe(expected);
   });
 
   test("div with a text node", () => {
@@ -92,6 +92,18 @@ describe("t-set", () => {
   test("set from body literal", () => {
     const template = `<t><t t-set="value">ok</t><t t-esc="value"/></t>`;
     const result = renderToString(template);
+    expect(result).toBe("ok");
+  });
+
+  test("set from attribute lookup", () => {
+    const template = `<t><t t-set="stuff" t-value="value"/><t t-esc="stuff"/></t>`;
+    const result = renderToString(template, { value: "ok" });
+    expect(result).toBe("ok");
+  });
+
+  test("set from body lookup", () => {
+    const template = `<t><t t-set="stuff"><t t-esc="value"/></t><t t-esc="stuff"/></t>`;
+    const result = renderToString(template, { value: "ok" });
     expect(result).toBe("ok");
   });
 });
