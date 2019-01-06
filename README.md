@@ -11,6 +11,7 @@ environment (or nodejs for most of it). This includes:
 
 The plan is to include these files/features:
 
+- tasks
 - concurrency
 - utils (?)
 - widget
