@@ -13,7 +13,7 @@
     "test:watch": "jest --watch",
     "tes2t": "tsc && ava ./dist/tests/*.js",
     "prebuild:example:demo": "rm -rf dist/examples && mkdir dist/examples && mkdir dist/examples/demo && cp -r examples/demo/static/* dist/examples/demo",
-    "build:example:demo": "tsc -m amd --outFile dist/examples/demo/app.js examples/demo/app.ts",
+    "build:example:demo": "tsc -m amd --lib es2015,dom --target esnext --outFile dist/examples/demo/app.js examples/demo/app.ts",
     "postbuild:example:demo": "open dist/examples/demo/index.html"
   },
   "devDependencies": {

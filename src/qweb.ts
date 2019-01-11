@@ -1,7 +1,7 @@
 import { escape } from "./utils";
 
 type RawTemplate = string;
-type Template = (context: any) => Node;
+type Template = (context: any) => DocumentFragment;
 
 // Evaluation Context
 export type EvalContext = { [key: string]: any };
@@ -156,7 +156,7 @@ export default class QWeb {
    *
    * @param {string} name the template should already have been added
    */
-  render(name: string, context: any = {}): Node {
+  render(name: string, context: any = {}): DocumentFragment {
     const template = this.templates[name] || this._compile(name);
     return template(context);
   }
@@ -390,6 +390,13 @@ export default class QWeb {
             );
             ctx.addLine(
               `${nodeID}.setAttribute('${exprName}', \`${formattedExpr}\`)`
+            );
+          }
+          if (name.startsWith("t-on-")) {
+            const eventName = name.slice(5);
+            const handler = value;
+            ctx.addLine(
+              `${nodeID}.addEventListener('${eventName}', context['${handler}'].bind(context))`
             );
           }
           if (name === "t-att") {
