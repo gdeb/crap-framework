@@ -16,6 +16,7 @@ export default class Widget {
   template: string = "<div></div>";
 
   parent: Widget | null;
+  children: Widget[] = [];
   env: Environment | null = null;
   el: ChildNode | null = null;
 
@@ -25,8 +26,11 @@ export default class Widget {
 
   constructor(parent: Widget | null) {
     this.parent = parent;
-    if (parent && parent.env) {
-      this.setEnvironment(parent.env);
+    if (parent) {
+      parent.children.push(this);
+      if (parent.env) {
+        this.setEnvironment(parent.env);
+      }
     }
   }
 
