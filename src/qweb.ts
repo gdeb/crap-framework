@@ -188,16 +188,17 @@ export default class QWeb {
 
     let ctx = new Context();
 
+    const mainNode = doc.firstChild!;
     ctx.addLine(`${ctx.fragmentID} = document.createDocumentFragment()`);
-    this._compileNode(doc.firstChild!, ctx);
+    this._compileNode(mainNode, ctx);
 
     ctx.addLine(`return ${ctx.fragmentID}`);
     const functionCode = ctx.code.join("\n");
-    // console.log(
-    //   `Template: ${this.rawTemplates[name]}\nCompiled code:\n` + functionCode
-    // );
-    // console.log(ctx.variables.value[0]);
-    // console.log(`Context: ${JSON.stringify(ctx)}`);
+    if ((<Element>mainNode).attributes.hasOwnProperty("t-debug")) {
+      console.log(
+        `Template: ${this.rawTemplates[name]}\nCompiled code:\n` + functionCode
+      );
+    }
     const template: Template = (new Function(
       "context",
       functionCode
