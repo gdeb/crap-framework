@@ -28,9 +28,7 @@ export default class Widget {
     this.parent = parent;
     if (parent) {
       parent.children.push(this);
-      if (parent.env) {
-        this.setEnvironment(parent.env);
-      }
+      this.setEnvironment(parent.env);
     }
   }
 
@@ -57,9 +55,11 @@ export default class Widget {
 
   destroy() {}
 
-  setEnvironment(env: Environment) {
-    this.env = Object.create(env);
-    env.qweb.addTemplate(this.name, this.template);
+  setEnvironment(env: Environment | null) {
+    this.env = env ? Object.create(env) : null;
+    if (this.env) {
+      this.env.qweb.addTemplate(this.name, this.template);
+    }
   }
 
   //--------------------------------------------------------------------------

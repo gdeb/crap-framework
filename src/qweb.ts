@@ -98,6 +98,9 @@ export default class QWeb {
    * immediately compiled.
    */
   addTemplate(name: string, template: RawTemplate) {
+    if (name in this.rawTemplates) {
+      return;
+    }
     this.rawTemplates[name] = template;
     const parser = new DOMParser();
     const doc = parser.parseFromString(template, "text/xml");
@@ -107,17 +110,17 @@ export default class QWeb {
     if (doc.firstChild.nodeName === "parsererror") {
       throw new Error("Invalid XML in template");
     }
-    var tbranch = doc.querySelectorAll("[t-elif], [t-else]");
-    for (var i = 0, ilen = tbranch.length; i < ilen; i++) {
-      var node = tbranch[i];
-      var prev_elem = node.previousElementSibling!;
-      var pattr = function(name) {
-        return prev_elem.getAttribute(name);
+    let tbranch = doc.querySelectorAll("[t-elif], [t-else]");
+    for (let i = 0, ilen = tbranch.length; i < ilen; i++) {
+      let node = tbranch[i];
+      let prevElem = node.previousElementSibling!;
+      let pattr = function(name) {
+        return prevElem.getAttribute(name);
       };
-      var nattr = function(name) {
+      let nattr = function(name) {
         return +!!node.getAttribute(name);
       };
-      if (prev_elem && (pattr("t-if") || pattr("t-elif"))) {
+      if (prevElem && (pattr("t-if") || pattr("t-elif"))) {
         if (pattr("t-foreach")) {
           throw new Error(
             "t-if cannot stay at the same level as t-foreach when using t-elif or t-else"
@@ -133,13 +136,12 @@ export default class QWeb {
           );
         }
         // All text nodes between branch nodes are removed
-        var text_node;
-        while ((text_node = node.previousSibling) !== prev_elem) {
-          if (text_node.nodeValue.trim().length) {
+        let textNode;
+        while ((textNode = node.previousSibling) !== prevElem) {
+          if (textNode.nodeValue.trim().length) {
             throw new Error("text is not allowed between branching directives");
           }
-          // IE <= 11.0 doesn't support ChildNode.remove
-          text_node.parentNode.removeChild(text_node);
+          textNode.remove();
         }
       } else {
         throw new Error(
