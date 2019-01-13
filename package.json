@@ -13,7 +13,7 @@
     "test:watch": "jest --watch",
     "tes2t": "tsc && ava ./dist/tests/*.js",
     "prebuild:example:demo": "rm -rf dist/examples && mkdir dist/examples && mkdir dist/examples/demo && cp -r examples/demo/static/* dist/examples/demo",
-    "build:example:demo": "tsc -m amd --lib es2015,dom --target esnext --outFile dist/examples/demo/app.js examples/demo/src/app.ts",
+    "build:example:demo": "tsc -m amd --lib es2015,dom --target esnext --outFile dist/examples/demo/app.js examples/demo/src/app.ts && terser dist/examples/demo/app.js -c -m -o dist/examples/demo/app.min.js",
     "postbuild:example:demo": "open dist/examples/demo/index.html"
   },
   "devDependencies": {
@@ -21,6 +21,7 @@
     "@types/node": "^10.12.18",
     "jest": "^23.6.0",
     "source-map-support": "^0.5.9",
+    "terser": "^3.14.1",
     "ts-jest": "^23.10.5",
     "typescript": "^3.2.2"
   },
