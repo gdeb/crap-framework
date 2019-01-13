@@ -12,6 +12,9 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "tes2t": "tsc && ava ./dist/tests/*.js",
+    "pretest:example:demo": "rm -rf dist/examples && mkdir dist/examples && mkdir dist/examples/demo && cp -r examples/demo/static/* dist/examples/demo",
+    "test:example:demo": "tsc -m amd --lib es2015,dom --target esnext --outFile dist/examples/demo/app.min.js examples/demo/src/app.ts",
+    "posttest:example:demo": "open dist/examples/demo/index.html",
     "prebuild:example:demo": "rm -rf dist/examples && mkdir dist/examples && mkdir dist/examples/demo && cp -r examples/demo/static/* dist/examples/demo",
     "build:example:demo": "tsc -m amd --lib es2015,dom --target esnext --outFile dist/examples/demo/app.js examples/demo/src/app.ts && terser dist/examples/demo/app.js -c -m -o dist/examples/demo/app.min.js",
     "postbuild:example:demo": "open dist/examples/demo/index.html"

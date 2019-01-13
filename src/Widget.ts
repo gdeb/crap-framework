@@ -19,6 +19,7 @@ export default class Widget {
   children: Widget[] = [];
   env: Environment | null = null;
   el: ChildNode | null = null;
+  state: Object = {};
 
   //--------------------------------------------------------------------------
   // Lifecycle
@@ -59,7 +60,13 @@ export default class Widget {
     this.env = env ? Object.create(env) : null;
     if (this.env) {
       this.env.qweb.addTemplate(this.name, this.template);
+      delete this.template;
     }
+  }
+
+  async updateState(newState: Object) {
+    Object.assign(this.state, newState);
+    await this.render();
   }
 
   //--------------------------------------------------------------------------

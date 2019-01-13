@@ -396,9 +396,15 @@ export default class QWeb {
           }
           if (name.startsWith("t-on-")) {
             const eventName = name.slice(5);
-            const handler = value;
+            let extraArgs;
+            let handler = value.replace(/\(.*\)/, function(args) {
+              extraArgs = args.slice(1, -1);
+              return "";
+            });
             ctx.addLine(
-              `${nodeID}.addEventListener('${eventName}', context['${handler}'].bind(context))`
+              `${nodeID}.addEventListener('${eventName}', context['${handler}'].bind(context${
+                extraArgs ? ", " + extraArgs : ""
+              }))`
             );
           }
           if (name === "t-att") {
