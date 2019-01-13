@@ -2,8 +2,8 @@
 
 // import RootWidget from "./RootWidget";
 import Counter from "./Counter";
-import { Environment } from "../../src/widget";
-import QWeb from "../../src/qweb";
+import { Environment } from "../../../src/widget";
+import QWeb from "../../../src/qweb";
 
 function makeEnv(): Environment {
   const qweb = new QWeb();

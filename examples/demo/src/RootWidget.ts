@@ -1,4 +1,4 @@
-import Widget from "../../src/widget";
+import Widget from "../../../src/widget";
 import Counter from "./Counter";
 
 const template = `
